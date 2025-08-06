@@ -1,6 +1,6 @@
 import React from 'react'
 
-function router() {
+function Product() {
   return (
     <div>
       
@@ -8,4 +8,4 @@ function router() {
   )
 }
 
-export default router
+export default Product
