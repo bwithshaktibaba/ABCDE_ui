@@ -1,69 +1,81 @@
 /* src/css/Home.css */
 
+/* CSS Variables for easy theme management */
+:root {
+  --primary-color: #3498db;
+  --primary-hover: #2980b9;
+  --success-color: #2ecc71;
+  --success-hover: #27ae60;
+  --danger-color: #e74c3c;
+  --background-light: #f8f9fa;
+  --background-hover: #e9ecef;
+  --border-color: #ddd;
+  --font-color-primary: #2c3e50;
+  --font-color-secondary: #3498db;
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --shadow-hover: rgba(0, 0, 0, 0.15);
+}
+
 .home-container {
   padding: 20px;
+  background-color: #fff;
+  min-height: 100vh;
+  box-sizing: border-box;
 }
 
 .home-header {
   display: flex;
   justify-content: space-between;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
   align-items: center;
-}
-
-.login-toggle-btn {
-  padding: 8px 16px;
-  background-color: #3498db;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: all 0.3s ease;
-}
-
-.login-toggle-btn:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background-color: white;
+  box-shadow: 0 1px 3px var(--shadow-light);
 }
 
 .cart-container {
   position: relative;
   cursor: pointer;
-  padding: 8px 16px;
-  background-color: #f8f9fa;
-  border-radius: 4px;
-  border: 1px solid #ddd;
-  transition: all 0.3s ease;
+  padding: 10px 18px;
+  background-color: var(--background-light);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  user-select: none;
 }
 
 .cart-container:hover {
-  background-color: #e9ecef;
+  background-color: var(--background-hover);
+  border-color: #a3b8d1;
+  box-shadow: 0 2px 8px rgba(50, 100, 150, 0.15);
 }
 
 .cart-count {
   position: absolute;
-  top: -8px;
-  right: -10px;
-  background: #e74c3c;
+  top: -10px;
+  right: -12px;
+  background: var(--danger-color);
   color: white;
   border-radius: 50%;
-  padding: 2px 6px;
-  font-size: 12px;
-  min-width: 18px;
-  height: 18px;
+  padding: 0 6px;
+  font-size: 13px;
+  min-width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+  pointer-events: none; /* so it doesn't block clicks */
 }
 
 .products-container {
   display: flex;
   gap: 20px;
-  padding: 20px;
+  padding: 20px 0;
   flex-wrap: wrap;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 .product-card {
@@ -72,51 +84,67 @@
   width: 150px;
   text-align: center;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  box-shadow: 0 1px 4px var(--shadow-light);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
   background-color: #fff;
+  user-select: none;
 }
 
 .product-card:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-  transform: translateY(-5px);
+  box-shadow: 0 8px 20px var(--shadow-hover);
+  transform: translateY(-8px);
 }
 
 .product-image {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border-radius: 4px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  transition: transform 0.3s ease;
+  user-select: none;
+}
+
+.product-image:hover {
+  transform: scale(1.05);
 }
 
 .product-name {
   font-size: 1.1rem;
   margin: 10px 0;
-  color: #2c3e50;
+  color: var(--font-color-primary);
+  user-select: text;
 }
 
 .product-price {
   font-size: 1rem;
   font-weight: bold;
-  color: #3498db;
+  color: var(--font-color-secondary);
   margin: 5px 0;
+  user-select: text;
 }
 
 .add-to-cart-btn {
-  padding: 8px 16px;
-  background-color: #2ecc71;
+  padding: 10px 20px;
+  background-color: var(--success-color);
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
   margin-top: 10px;
+  user-select: none;
 }
 
 .add-to-cart-btn:hover {
-  background-color: #27ae60;
-  transform: translateY(-2px);
+  background-color: var(--success-hover);
+  transform: translateY(-3px);
+}
+
+.add-to-cart-btn:focus {
+  outline: 3px solid var(--primary-hover);
+  outline-offset: 3px;
 }
 
 .add-to-cart-btn:active {
@@ -128,10 +156,20 @@
   .products-container {
     flex-direction: column;
     align-items: center;
+    padding: 10px 0;
   }
   
   .product-card {
-    width: 100%;
+    width: 90vw;
     max-width: 300px;
+  }
+  
+  .home-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .cart-container {
+    padding: 8px 14px;
   }
 }

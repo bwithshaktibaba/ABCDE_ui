@@ -1,56 +1,75 @@
-/* src/css/Login.css */
-
+/* Modern Login Page Styles */
 .login-container {
-  max-width: 400px;
-  margin: 40px auto;
-  padding: 30px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  background-color: #fff;
-  font-family: Arial, sans-serif;
+  max-width: 420px;
+  margin: 80px auto;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  animation: fadeIn 0.5s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .login-container h2 {
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 300;
   text-align: center;
-  margin-bottom: 20px;
-  color: #2c3e50;
 }
 
 .login-form {
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 20px;
+}
+
+.login-form label {
+  font-weight: 500;
+  margin-bottom: 5px;
+  display: block;
 }
 
 .login-form input {
-  padding: 12px;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
+}
+
+.login-form input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 .login-form input:focus {
-  border-color: #3498db;
+  background: rgba(255, 255, 255, 0.2);
   outline: none;
-  box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
 }
 
 .login-form button {
-  padding: 12px;
-  font-size: 1rem;
-  background-color: #3498db;
+  padding: 15px;
+  font-size: 16px;
   border: none;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
   color: white;
-  font-weight: bold;
-  border-radius: 4px;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-weight: 500;
 }
 
 .login-form button:hover {
-  background-color: #2980b9;
+  background: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
 }
 
@@ -58,11 +77,26 @@
   transform: translateY(0);
 }
 
-/* Mobile responsiveness */
-@media (max-width: 768px) {
-  .login-container {
-    margin: 20px auto;
-    padding: 20px;
-    width: 90%;
-  }
+.error-message {
+  color: #ff6b6b;
+  background: rgba(255, 107, 107, 0.1);
+  padding: 10px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.test-credentials {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.test-credentials p {
+  margin: 5px 0;
+}
+
+.test-credentials strong {
+  color: #ffd700;
 }

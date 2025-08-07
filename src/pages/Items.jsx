@@ -1,61 +1,95 @@
-import React, { useEffect, useState } from 'react';
-import { getItems, addToCart, checkout, getCart, getOrders } from '../api/api';
-import '../css/Items.css';
+import React, { useState } from 'react';
+import { FaShoppingCart, FaCheck } from 'react-icons/fa';
 
-export default function Items({ token }) {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    getItems().then(res => setItems(res.data)).catch(console.error);
-  }, []);
-
-  const handleAddToCart = async (itemId) => {
-    try {
-      await addToCart(token, itemId);
-      alert('Item added to cart');
-    } catch {
-      alert('Failed to add item');
+function Items({ token, addToCart }) {
+  const [items] = useState([
+    { 
+      id: 1, 
+      name: 'Laptop', 
+      price: 999.99, 
+      description: 'High-performance laptop with 16GB RAM and 512GB SSD',
+      image: 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=300&h=200&fit=crop',
+      category: 'Electronics'
+    },
+    { 
+      id: 2, 
+      name: 'Smartphone', 
+      price: 699.99, 
+      description: 'Latest smartphone model with 5G support and 128GB storage',
+      image: 'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=300&h=200&fit=crop',
+      category: 'Electronics'
+    },
+    { 
+      id: 3, 
+      name: 'Headphones', 
+      price: 199.99, 
+      description: 'Premium noise-cancelling wireless headphones with 30hr battery',
+      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300&h=200&fit=crop',
+      category: 'Audio'
+    },
+    { 
+      id: 4, 
+      name: 'Tablet', 
+      price: 449.99, 
+      description: '10-inch tablet with stylus support and 256GB storage',
+      image: 'https://images.unsplash.com/photo-1544244015-0df4b3f6d1a6?w=300&h=200&fit=crop',
+      category: 'Electronics'
     }
-  };
+  ]);
 
-  const handleCheckout = async () => {
-    try {
-      await checkout(token);
-      alert('Order successful');
-    } catch {
-      alert('Checkout failed');
-    }
-  };
+  const [addedItems, setAddedItems] = useState({});
 
-  const handleShowCart = async () => {
-    const res = await getCart(token);
-    const msg = res.data.map(item => `Cart ID: ${item.cart_id}, Item ID: ${item.item_id}`).join('\n');
-    alert(msg || 'Cart is empty');
-  };
-
-  const handleShowOrders = async () => {
-    const res = await getOrders(token);
-    const msg = res.data.map(order => `Order ID: ${order.id}`).join('\n');
-    alert(msg || 'No orders found');
+  const handleAddToCart = (item) => {
+    addToCart(item);
+    setAddedItems(prev => ({ ...prev, [item.id]: true }));
+    setTimeout(() => {
+      setAddedItems(prev => ({ ...prev, [item.id]: false }));
+    }, 2000);
   };
 
   return (
     <div className="items-container">
       <div className="items-header">
-        <h2 className="items-title">Items</h2>
-        <div className="items-actions">
-          <button className="action-btn checkout-btn" onClick={handleCheckout}>Checkout</button>
-          <button className="action-btn cart-btn" onClick={handleShowCart}>Cart</button>
-          <button className="action-btn orders-btn" onClick={handleShowOrders}>Order History</button>
-        </div>
+        <h1>Available Items</h1>
+        <p>Discover our latest collection of premium products</p>
       </div>
-      <ul className="items-list">
+      
+      <div className="items-grid">
         {items.map(item => (
-          <li key={item.id} onClick={() => handleAddToCart(item.id)}>
-            {item.name}
-          </li>
+          <div key={item.id} className="item-card">
+            <div className="item-image-container">
+              <img src={item.image} alt={item.name} className="item-image" />
+              <span className="item-category">{item.category}</span>
+            </div>
+            
+            <div className="item-details">
+              <h3 className="item-name">{item.name}</h3>
+              <p className="item-description">{item.description}</p>
+              <p className="item-price">${item.price}</p>
+              
+              <button 
+                className={`add-to-cart-btn ${addedItems[item.id] ? 'added' : ''}`}
+                onClick={() => handleAddToCart(item)}
+                disabled={addedItems[item.id]}
+              >
+                {addedItems[item.id] ? (
+                  <>
+                    <FaCheck className="btn-icon" />
+                    Added!
+                  </>
+                ) : (
+                  <>
+                    <FaShoppingCart className="btn-icon" />
+                    Add to Cart
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
+
+export default Items;

@@ -1,45 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../css/Home.css';
+import { useNavigate } from 'react-router-dom';
+import { FaTshirt, FaShoppingBag, FaPlus } from 'react-icons/fa';
 
-function Home() {
+function Home({ isLoggedIn, addToCart }) {
+  const navigate = useNavigate();
   const products = [
-    { id: 1, name: 'T-shirt', image: 'https://via.placeholder.com/150', price: 15 },
-    { id: 2, name: 'Jeans', image: 'https://via.placeholder.com/150', price: 40 },
-    { id: 3, name: 'Sneakers', image: 'https://via.placeholder.com/150', price: 60 },
+    { id: 1, name: 'T-shirt', image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=300&h=300&fit=crop', price: 15, icon: <FaTshirt /> },
+    { id: 2, name: 'Jeans', image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=300&h=300&fit=crop', price: 40, icon: <FaShoppingBag /> },
+    { id: 3, name: 'Sneakers', image: 'https://images.unsplash.com/photo-1549298916-b41d501d3772?w=300&h=300&fit=crop', price: 60, icon: <FaShoppingBag /> },
   ];
 
-  const [cartCount, setCartCount] = useState(0);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const addToCart = () => {
+  const handleAddToCart = (product) => {
     if (isLoggedIn) {
-      setCartCount(cartCount + 1);
+      addToCart(product);
     } else {
-      alert('Please login or signup to add items to your cart.');
+      alert('Please login to add items to your cart.');
+      navigate('/login');
     }
-  };
-
-  // Mock login/logout toggle
-  const toggleLogin = () => {
-    setIsLoggedIn(!isLoggedIn);
-    setCartCount(0); // optional: clear cart on logout
   };
 
   return (
     <div className="home-container">
-      {/* Header with login toggle and cart */}
       <header className="home-header">
-        <button className="login-toggle-btn" onClick={toggleLogin}>
-          {isLoggedIn ? 'Logout' : 'Login / Signup'}
-        </button>
-
-        <div className="cart-container">
-          🛒 Cart
-          {cartCount > 0 && (
-            <span className="cart-count">
-              {cartCount}
-            </span>
-          )}
+        <div className="welcome-section">
+          <h1>
+            <span className="welcome-icon">🛍️</span>
+            Welcome to ABCDE Store
+          </h1>
         </div>
       </header>
 
@@ -47,10 +35,16 @@ function Home() {
       <div className="products-container">
         {products.map(product => (
           <div key={product.id} className="product-card">
+            <div className="product-icon-container">
+              {product.icon}
+            </div>
             <img src={product.image} alt={product.name} className="product-image" />
             <h3 className="product-name">{product.name}</h3>
             <p className="product-price">${product.price}</p>
-            <button className="add-to-cart-btn" onClick={addToCart}>Add</button>
+            <button className="add-to-cart-btn" onClick={() => handleAddToCart(product)}>
+              <FaPlus className="btn-icon" />
+              Add to Cart
+            </button>
           </div>
         ))}
       </div>
